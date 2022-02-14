@@ -31,7 +31,7 @@ class DetailsPage extends StatelessWidget {
             const SizedBox(height: 24),
             const SizedBox(height: 24),
             Text(
-              'Site: ${args.web_pages.toString()},Cidade: ${args.state_province}',
+              'Cidade: ${args.state_province}',
               style: const TextStyle(
                 fontSize: 16,
               ),

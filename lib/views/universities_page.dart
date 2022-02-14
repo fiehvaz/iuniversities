@@ -16,12 +16,11 @@ class UniversitiesPage extends StatefulWidget {
 class _UniversitiesPage extends State<UniversitiesPage> {
   final HomeController _controller = HomeController(HomeRepositoryImp());
 
-  bool isDescending = false;
-
   @override
   Widget build(BuildContext context) {
     String countrie = ModalRoute.of(context)!.settings.arguments as String;
     _controller.fetch(countrie);
+    bool isDescending = false;
     return Scaffold(
       appBar: AppBar(
         title: const Text('iUniversities'),
@@ -58,7 +57,7 @@ class _UniversitiesPage extends State<UniversitiesPage> {
                   shrinkWrap: true,
                   itemCount: list.length,
                   itemBuilder: (_, idx) => ListTile(
-                    leading: Text(list[idx].name.toString()),
+                    title: Text(list[idx].name.toString()),
 
                     //title: Text(list[idx].name),
                     // trailing: const Icon(Icons.star),
