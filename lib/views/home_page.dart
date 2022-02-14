@@ -61,7 +61,8 @@ class _HomePage extends State<HomePage> {
             title: Text(countrie),
             subtitle: Text('Universities $index'),
             onTap: () {
-              Navigator.of(context).pushNamed('/UniversitiesPage');
+              Navigator.of(context)
+                  .pushNamed('/universitiesPage', arguments: countrie);
             },
           );
         },

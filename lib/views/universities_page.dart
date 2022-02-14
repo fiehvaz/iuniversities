@@ -8,26 +8,20 @@ import 'package:iuniversities/repositories/home_repository_imp.dart';
 class UniversitiesPage extends StatefulWidget {
   const UniversitiesPage({Key? key}) : super(key: key);
 
+  //final String countrie;
   @override
   State<UniversitiesPage> createState() => _UniversitiesPage();
 }
 
-String countrie = "Argentina";
-
 class _UniversitiesPage extends State<UniversitiesPage> {
   final HomeController _controller = HomeController(HomeRepositoryImp());
-
-  @override
-  void initState() {
-    super.initState();
-    //passar a variavel
-    _controller.fetch();
-  }
 
   bool isDescending = false;
 
   @override
   Widget build(BuildContext context) {
+    String countrie = ModalRoute.of(context)!.settings.arguments as String;
+    _controller.fetch(countrie);
     return Scaffold(
       appBar: AppBar(
         title: const Text('iUniversities'),

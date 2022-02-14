@@ -7,8 +7,8 @@ class HomeController {
   HomeController(this._homeRepository);
 
   ValueNotifier<List<PostModel>> posts = ValueNotifier<List<PostModel>>([]);
-  fetch() async {
-    posts.value = await _homeRepository.getList();
+  fetch(String countrie) async {
+    posts.value = await _homeRepository.getList(countrie);
     //passar como paremetro
     // criar classe dao
   }
