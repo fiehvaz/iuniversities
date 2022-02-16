@@ -33,7 +33,8 @@ class ContactDao {
   Future<List<PostModel>> getAll(countrie) async {
     final Database db = await openDb();
     final List<Map<String, dynamic>> result = await db.rawQuery(
-        'SELECT * FROM $_tableName WHERE countrie = ?', ['$countrie']);
+        'SELECT * FROM $_tableName WHERE countrie = ? ORDER BY name ASC',
+        ['$countrie']);
 
     return (result).map((e) => PostModel.fromBson(e)).toList();
   }
@@ -41,7 +42,7 @@ class ContactDao {
   Future<String> getCount(countrie) async {
     Database db = await openDb();
     var z = await db.rawQuery(
-        'SELECT COUNT(*) FROM $_tableName WHERE countrie = ?', ['$countrie']);
+        'SELECT COUNT(*) FROM $_tableName WHERE countrie = ? ', ['$countrie']);
     int? count = Sqflite.firstIntValue(z);
     String h = count.toString();
     return h;

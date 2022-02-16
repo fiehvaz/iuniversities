@@ -87,7 +87,7 @@ class _HomePage extends State<HomePage> {
       var x = await _contactDao.getCount(countries[i]);
       counts[i] = x;
     }
-    print('qtd');
+
     return 'ok';
   }
 }

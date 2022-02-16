@@ -8,11 +8,20 @@ class HomeController {
   final ContactDao _contactDao = ContactDao();
   HomeController(this._homeRepository);
 
+  List<PostModel> fpost = <PostModel>[];
   ValueNotifier<List<PostModel>> posts = ValueNotifier<List<PostModel>>([]);
-  fetch(String countrie) async {
-    posts.value = await _contactDao.getAll(countrie);
 
-    if (posts.value.isEmpty) {
+  filteredUni(String onChanged) {
+    posts.value = fpost
+        .where((element) =>
+            element.name!.toLowerCase().contains(onChanged.toLowerCase()))
+        .toList();
+  }
+
+  fetch(String countrie) async {
+    fpost = await _contactDao.getAll(countrie);
+
+    if (fpost.isEmpty) {
       List<PostModel> x = await _homeRepository.getList(countrie);
 
       x.forEach((element) {
@@ -20,7 +29,8 @@ class HomeController {
             element.webPages.toString().replaceAll("[", "").replaceAll("]", "");
       });
       await _contactDao.insert(x);
-      posts.value = await _contactDao.getAll(countrie);
+      fpost = await _contactDao.getAll(countrie);
     }
+    posts.value = fpost;
   }
 }
