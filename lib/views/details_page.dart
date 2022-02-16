@@ -1,19 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:iuniversities/dao/contact_dao.dart';
 import 'package:iuniversities/models/post_model.dart';
 
 import 'package:url_launcher/url_launcher.dart';
 
-//const String _url = 'https://flutter.dev';
-
-class DetailsPage extends StatelessWidget {
+class DetailsPage extends StatefulWidget {
   const DetailsPage({Key? key}) : super(key: key);
 
   @override
+  State<DetailsPage> createState() => _DetailsPageState();
+}
+
+class _DetailsPageState extends State<DetailsPage> {
+  @override
   Widget build(BuildContext context) {
     PostModel args = ModalRoute.of(context)!.settings.arguments as PostModel;
+    final ContactDao _contactDao = ContactDao();
     return Scaffold(
       appBar: AppBar(
         title: Text(args.name!),
+        leading: IconButton(
+          icon: Icon(Icons.chevron_left),
+          onPressed: () => Navigator.pop(context, false),
+        ),
       ),
       body: Container(
         padding: const EdgeInsets.all(28),
@@ -28,7 +37,24 @@ class DetailsPage extends StatelessWidget {
                 fontStyle: FontStyle.italic,
               ),
             ),
-            const SizedBox(height: 24),
+            SizedBox(
+              height: 24,
+              child: IconButton(
+                icon: Icon(Icons.favorite,
+                    color: (args.fav == 1) ? Colors.red : Colors.grey),
+                onPressed: () {
+                  setState(() {
+                    if (args.fav == 1) {
+                      _contactDao.makefav(args.id, 0);
+                      args.fav = 0;
+                    } else {
+                      _contactDao.makefav(args.id, 1);
+                      args.fav = 1;
+                    }
+                  });
+                },
+              ),
+            ),
             const SizedBox(height: 24),
             Text(
               'Cidade: ${args.stateProvince}',
@@ -38,9 +64,6 @@ class DetailsPage extends StatelessWidget {
             ),
             ElevatedButton(
                 onPressed: () {
-                  //CHANGE NAME TO WEBPAGES
-                  //String _url1 = args.webPagesF.toString().replaceAll("]", "");
-                  //String _url = _url1.replaceAll("[", "");
                   _launchURL(args.webPagesF!);
                 },
                 child: Text(' ${args.webPagesF}'))

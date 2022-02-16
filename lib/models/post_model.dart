@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 class PostModel {
   int? id;
 
@@ -6,6 +8,7 @@ class PostModel {
   String? name;
   String? stateProvince;
   String? webPagesF;
+  int? fav;
 
   PostModel(
       {this.id,
@@ -13,7 +16,8 @@ class PostModel {
       this.country,
       this.name,
       this.stateProvince,
-      this.webPagesF});
+      this.webPagesF,
+      this.fav});
 //
   PostModel.fromJson(Map json) {
     id = json['id'];
@@ -22,6 +26,7 @@ class PostModel {
     name = json['name'];
     stateProvince = json['state-province'];
     webPagesF = json['webPagesF'];
+    fav = json['fav'];
   }
 
   PostModel.fromBson(Map json) {
@@ -30,6 +35,7 @@ class PostModel {
     country = json['country'];
     name = json['name'];
     stateProvince = json['stateprovince'];
+    fav = json['fav'];
   }
 
   Map<String, dynamic> toJson() {
@@ -41,6 +47,7 @@ class PostModel {
     data['name'] = this.name;
     data['state-province'] = this.stateProvince;
     data['web_pagesF'] = this.webPagesF;
+    data['fav'] = this.fav;
     return data;
   }
 }
