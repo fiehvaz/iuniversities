@@ -41,7 +41,7 @@ class _HomePage extends State<HomePage> {
     'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Flag_of_Uruguay.svg/1200px-Flag_of_Uruguay.svg.png',
     'https://bandeira.net/wp-content/uploads/2018/08/bandeira-da-venezuela.png'
   ];
-
+  final counts = List<dynamic>.filled(12, 0);
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
@@ -51,29 +51,43 @@ class _HomePage extends State<HomePage> {
         body: buildList(),
       );
 
-  Widget buildList() => Builder(builder: (context) {
-        return ListView.builder(
-          itemCount: countries.length,
-          itemBuilder: (context, index) {
-            final countrie = countries[index];
-            String uni_count = 'falta o future'; //getCount(countrie);
-            return ListTile(
-              leading: CircleAvatar(
-                radius: 28,
-                backgroundImage: NetworkImage(countrimage[index]),
-              ),
-              title: Text(countrie),
-              subtitle: Text(uni_count),
-              onTap: () {
-                Navigator.of(context)
-                    .pushNamed('/universitiesPage', arguments: countrie);
-              },
-            );
-          },
-        );
+  Widget buildList() => FutureBuilder(
+      future: getCount(countries),
+      builder: (context, AsyncSnapshot snapshot) {
+        if (!snapshot.hasData) {
+          return Center(child: CircularProgressIndicator());
+        } else {
+          return ListView.builder(
+            itemCount: countries.length,
+            itemBuilder: (context, index) {
+              // getCount(countries[index], index);
+              final countrie = countries[index];
+              //var uni_count; //getCount(countrie);
+
+              return ListTile(
+                leading: CircleAvatar(
+                  radius: 28,
+                  backgroundImage: NetworkImage(countrimage[index]),
+                ),
+                title: Text(countrie),
+                subtitle: Text('universities: ${counts[index]}'),
+                onTap: () {
+                  Navigator.of(context)
+                      .pushNamed('/universitiesPage', arguments: countrie)
+                      .then((value) => setState(() {}));
+                },
+              );
+            },
+          );
+        }
       });
-  getCount(String countrie) async {
-    var x = await _contactDao.getCount(countrie);
-    return x.toString();
+
+  getCount(countries) async {
+    for (int i = 0; i < countries.length; i++) {
+      var x = await _contactDao.getCount(countries[i]);
+      counts[i] = x;
+    }
+    print('qtd');
+    return 'ok';
   }
 }

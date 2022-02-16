@@ -21,7 +21,7 @@ class _DetailsPageState extends State<DetailsPage> {
         title: Text(args.name!),
         leading: IconButton(
           icon: Icon(Icons.chevron_left),
-          onPressed: () => Navigator.pop(context, false),
+          onPressed: () => Navigator.pop(context, true),
         ),
       ),
       body: Container(
