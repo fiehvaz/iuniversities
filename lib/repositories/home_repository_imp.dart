@@ -9,9 +9,9 @@ class HomeRepositoryImp implements HomeRepository {
     try {
       var response = await Dio()
           .get('http://universities.hipolabs.com/search?country=$countrie');
-      return (response.data as List).map((e) => PostModel.fromjson(e)).toList();
+      return (response.data as List).map((e) => PostModel.fromJson(e)).toList();
     } catch (e) {
-      //print(e);
+      // print(e);
     }
 
     return [];

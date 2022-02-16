@@ -1,20 +1,46 @@
 class PostModel {
-  final String name;
-  final String? state_province;
-  final List domains;
-  final List web_pages;
+  int? id;
 
-  PostModel(this.name, this.state_province, this.domains, this.web_pages);
+  List<String>? webPages;
+  String? country;
+  String? name;
+  String? stateProvince;
+  String? webPagesF;
+
+  PostModel(
+      {this.id,
+      this.webPages,
+      this.country,
+      this.name,
+      this.stateProvince,
+      this.webPagesF});
 //
-  factory PostModel.fromjson(Map json) {
-    return PostModel(
-      json['name'],
-      json['state-province'],
-      json['domains'],
-      json['web_pages'],
-    );
+  PostModel.fromJson(Map json) {
+    id = json['id'];
+    webPages = json['web_pages'].cast<String>();
+    country = json['country'];
+    name = json['name'];
+    stateProvince = json['state-province'];
+    webPagesF = json['webPagesF'];
   }
 
-  @override
-  String toString() => 'name: $name';
+  PostModel.fromBson(Map json) {
+    id = json['id'];
+    webPagesF = json['webPagesF'];
+    country = json['country'];
+    name = json['name'];
+    stateProvince = json['stateprovince'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+
+    data['web_pages'] = this.webPages;
+    data['country'] = this.country;
+    data['name'] = this.name;
+    data['state-province'] = this.stateProvince;
+    data['web_pagesF'] = this.webPagesF;
+    return data;
+  }
 }

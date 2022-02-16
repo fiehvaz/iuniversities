@@ -1,0 +1,22 @@
+class PostModel {
+  final int? id;
+  final String name;
+  final String? stateprovince;
+  // final List domains;
+  String? countrie;
+  //List web_pages;
+  // String web_pageF;
+//final String web_pages = web_pagess.toString().replaceAll("]", "");
+  // String _url = _url1.replaceAll("[", "");
+
+  PostModel(this.id, this.name, this.stateprovince, this.countrie);
+// this.domains,      this.web_pages,this.web_pages, this.web_pageF
+  factory PostModel.fromjson(Map json) {
+    return PostModel(
+        json['id'], json['name'], json['state-province'], json['countrie']);
+    // json['domains'],, json['web_pages'], json['web_pageF'],
+  }
+
+  @override
+  String toString() => 'countrie: $countrie';
+}

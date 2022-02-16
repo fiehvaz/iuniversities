@@ -41,10 +41,10 @@ class _UniversitiesPage extends State<UniversitiesPage> {
                   style: TextStyle(fontSize: 16),
                 ),
                 onPressed: () => setState(() {
-                  isDescending
-                      ? list.sort((a, b) => a.name.compareTo(b.name))
-                      : list.sort((b, a) => a.name.compareTo(b.name));
-                  isDescending = !isDescending;
+                  // isDescending
+                  // ? list.sort((a, b) => a.name.compareTo(b.name))
+                  //: list.sort((b, a) => a.name.compareTo(b.name));
+                  // isDescending = !isDescending;
                 }
                     //
 
@@ -60,7 +60,17 @@ class _UniversitiesPage extends State<UniversitiesPage> {
                     title: Text(list[idx].name.toString()),
 
                     //title: Text(list[idx].name),
-                    // trailing: const Icon(Icons.star),
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        IconButton(
+                            onPressed: () {
+                              print('aaa');
+                              list[idx].name = 'aaaaa';
+                            },
+                            icon: Icon(Icons.favorite)),
+                      ],
+                    ),
 
                     onTap: () => Navigator.of(context).pushNamed(
                       '/details',

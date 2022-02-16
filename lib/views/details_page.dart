@@ -13,7 +13,7 @@ class DetailsPage extends StatelessWidget {
     PostModel args = ModalRoute.of(context)!.settings.arguments as PostModel;
     return Scaffold(
       appBar: AppBar(
-        title: Text(args.name),
+        title: Text(args.name!),
       ),
       body: Container(
         padding: const EdgeInsets.all(28),
@@ -21,7 +21,7 @@ class DetailsPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              args.name,
+              args.name!,
               style: const TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
@@ -31,18 +31,19 @@ class DetailsPage extends StatelessWidget {
             const SizedBox(height: 24),
             const SizedBox(height: 24),
             Text(
-              'Cidade: ${args.state_province}',
+              'Cidade: ${args.stateProvince}',
               style: const TextStyle(
                 fontSize: 16,
               ),
             ),
             ElevatedButton(
                 onPressed: () {
-                  String _url1 = args.web_pages.toString().replaceAll("]", "");
-                  String _url = _url1.replaceAll("[", "");
-                  _launchURL(_url);
+                  //CHANGE NAME TO WEBPAGES
+                  //String _url1 = args.webPagesF.toString().replaceAll("]", "");
+                  //String _url = _url1.replaceAll("[", "");
+                  _launchURL(args.webPagesF!);
                 },
-                child: Text(' ${args.web_pages.toString()}'))
+                child: Text(' ${args.webPagesF}'))
           ],
         ),
       ),

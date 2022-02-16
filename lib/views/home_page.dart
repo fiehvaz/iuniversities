@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:iuniversities/dao/contact_dao.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -8,6 +9,8 @@ class HomePage extends StatefulWidget {
   @override
   State<HomePage> createState() => _HomePage();
 }
+
+final ContactDao _contactDao = ContactDao();
 
 class _HomePage extends State<HomePage> {
   List<String> countries = [
@@ -48,23 +51,29 @@ class _HomePage extends State<HomePage> {
         body: buildList(),
       );
 
-  Widget buildList() => ListView.builder(
-        itemCount: countries.length,
-        itemBuilder: (context, index) {
-          final countrie = countries[index];
-
-          return ListTile(
-            leading: CircleAvatar(
-              radius: 28,
-              backgroundImage: NetworkImage(countrimage[index]),
-            ),
-            title: Text(countrie),
-            subtitle: Text('Universities $index'),
-            onTap: () {
-              Navigator.of(context)
-                  .pushNamed('/universitiesPage', arguments: countrie);
-            },
-          );
-        },
-      );
+  Widget buildList() => Builder(builder: (context) {
+        return ListView.builder(
+          itemCount: countries.length,
+          itemBuilder: (context, index) {
+            final countrie = countries[index];
+            String uni_count = 'falta o future'; //getCount(countrie);
+            return ListTile(
+              leading: CircleAvatar(
+                radius: 28,
+                backgroundImage: NetworkImage(countrimage[index]),
+              ),
+              title: Text(countrie),
+              subtitle: Text(uni_count),
+              onTap: () {
+                Navigator.of(context)
+                    .pushNamed('/universitiesPage', arguments: countrie);
+              },
+            );
+          },
+        );
+      });
+  getCount(String countrie) async {
+    var x = await _contactDao.getCount(countrie);
+    return x.toString();
+  }
 }
